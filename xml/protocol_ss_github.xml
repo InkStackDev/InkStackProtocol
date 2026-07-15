@@ -49,9 +49,10 @@
 
     <macrogroup name="GithubError" desc="GitHub RPC 错误码定义">
       <macro name="GITHUB_REPO_NOT_FOUND" value="1" desc="GitHub RPC 错误码: 仓库未找到" />
-      <macro name="GITHUB_DB_CONNECTION_FAILED" value="2" desc="GitHub RPC 错误码: 数据库连接失败" />
-      <macro name="GITHUB_DB_OPERATION_FAILED" value="3" desc="GitHub RPC 错误码: 数据库操作失败" />
-      <macro name="GITHUB_UNKNOWN_ERROR" value="4" desc="GitHub RPC 错误码: 未知错误" />
+      <macro name="GITHUB_PR_NOT_FOUND" value="2" desc="GitHub RPC 错误码: PR 未找到" />
+      <macro name="GITHUB_DB_CONNECTION_FAILED" value="3" desc="GitHub RPC 错误码: 数据库连接失败" />
+      <macro name="GITHUB_DB_OPERATION_FAILED" value="4" desc="GitHub RPC 错误码: 数据库操作失败" />
+      <macro name="GITHUB_UNKNOWN_ERROR" value="5" desc="GitHub RPC 错误码: 未知错误" />
     </macrogroup>
   </header>
 </metalib>
