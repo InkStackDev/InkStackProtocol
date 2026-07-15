@@ -120,4 +120,14 @@ struct chen::rpc::Serialization<tagGithubPRReviewInfo> {
     }
 };
 
+/**
+ * @brief GitHub RPC 错误码定义
+ */
+enum tagGithubError {
+    GITHUB_REPO_NOT_FOUND = 1,       /* GitHub RPC 错误码: 仓库未找到 */
+    GITHUB_DB_CONNECTION_FAILED = 2, /* GitHub RPC 错误码: 数据库连接失败 */
+    GITHUB_DB_OPERATION_FAILED = 3,  /* GitHub RPC 错误码: 数据库操作失败 */
+    GITHUB_UNKNOWN_ERROR = 4         /* GitHub RPC 错误码: 未知错误 */
+};
+
 #endif // __PROTOCOL_SS_GITHUB_H__
