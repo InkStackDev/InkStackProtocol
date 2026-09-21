@@ -9,6 +9,9 @@
 #include <cstdint>
 #include <string>
 
+#define SS_CMD_GET_GITHUB_PR_INFO        100 /* 获取github的PR信息 */
+#define SS_CMD_GET_GITHUB_PR_REVIEW_INFO 101 /* 获取github的PR审查信息 */
+
 /**
  * @brief GitHub Pull Request 事件数据（对应 pull_request webhook）
  */
