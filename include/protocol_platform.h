@@ -121,6 +121,7 @@ struct chen::rpc::Serialization<tagSystemSettings> {
  * @brief 用户所属组织简介
  */
 struct tagUserOrgBrief {
+    int64_t RelId;              /* 用户-组织关系 id */
     int64_t OrgId;              /* 组织 id */
     std::string OrgName;        /* 组织名称 */
     std::string OrgDescription; /* 组织描述 */
@@ -137,6 +138,7 @@ template <>
 struct chen::rpc::Serialization<tagUserOrgBrief> {
     static void write(ByteArray::ptr ba, const tagUserOrgBrief& u)
     {
+        ba->writeFint64(u.RelId);
         ba->writeFint64(u.OrgId);
         ba->writeStringVint(u.OrgName);
         ba->writeStringVint(u.OrgDescription);
@@ -148,6 +150,7 @@ struct chen::rpc::Serialization<tagUserOrgBrief> {
 
     static void read(ByteArray::ptr ba, tagUserOrgBrief& u)
     {
+        u.RelId = ba->readFint64();
         u.OrgId = ba->readFint64();
         u.OrgName = ba->readStringVint();
         u.OrgDescription = ba->readStringVint();

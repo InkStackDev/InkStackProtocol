@@ -4,7 +4,7 @@
 
         <macro name="SS_CMD_GET_GITHUB_PR_INFO" value="100" type="int" desc="获取github的PR信息"/>
         <struct name="GithubPRInfo" desc="GitHub Pull Request 事件数据（对应 pull_request webhook）" serialize="true">
-            <entry name="Action" type="string" desc="事件类型: opened/closed/reopened/synchronize/edited/labeled/unlabeled"/>
+            <entry name="Action" type="string" desc="事件类型"/>
             <entry name="Number" type="int" desc="PR 编号"/>
             <entry name="Title" type="string" desc="PR 标题"/>
             <entry name="Body" type="string" desc="PR 描述/正文"/>
@@ -27,7 +27,7 @@
         </struct>
 
         <macro name="SS_CMD_GET_GITHUB_PR_REVIEW_INFO" value="101" type="int" desc="获取github的PR审查信息"/>
-        <struct name="GithubPRReviewInfo" desc="GitHub PR Review 事件数据（对应 pull_request_review webhook）" serialize="true">
+        <struct name="GithubPRReviewInfo" desc="GitHub PR Review 事件数据" serialize="true">
             <entry name="Action" type="string" desc="事件类型: submitted/edited/dismissed"/>
             <entry name="PRNumber" type="int" desc="PR 编号"/>
             <entry name="Reviewer" type="string" desc="审查者 GitHub 用户名"/>

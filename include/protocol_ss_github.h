@@ -41,7 +41,8 @@ struct tagGithubPRInfo {
  */
 template <>
 struct chen::rpc::Serialization<tagGithubPRInfo> {
-    static void write(ByteArray::ptr ba, const tagGithubPRInfo& u) {
+    static void write(ByteArray::ptr ba, const tagGithubPRInfo& u)
+    {
         ba->writeStringVint(u.Action);
         ba->writeFint32(u.Number);
         ba->writeStringVint(u.Title);
@@ -62,7 +63,8 @@ struct chen::rpc::Serialization<tagGithubPRInfo> {
         ba->writeStringVint(u.RepoName);
     }
 
-    static void read(ByteArray::ptr ba, tagGithubPRInfo& u) {
+    static void read(ByteArray::ptr ba, tagGithubPRInfo& u)
+    {
         u.Action = ba->readStringVint();
         u.Number = ba->readFint32();
         u.Title = ba->readStringVint();
@@ -102,7 +104,8 @@ struct tagGithubPRReviewInfo {
  */
 template <>
 struct chen::rpc::Serialization<tagGithubPRReviewInfo> {
-    static void write(ByteArray::ptr ba, const tagGithubPRReviewInfo& u) {
+    static void write(ByteArray::ptr ba, const tagGithubPRReviewInfo& u)
+    {
         ba->writeStringVint(u.Action);
         ba->writeFint32(u.PRNumber);
         ba->writeStringVint(u.Reviewer);
@@ -112,7 +115,8 @@ struct chen::rpc::Serialization<tagGithubPRReviewInfo> {
         ba->writeStringVint(u.RepoName);
     }
 
-    static void read(ByteArray::ptr ba, tagGithubPRReviewInfo& u) {
+    static void read(ByteArray::ptr ba, tagGithubPRReviewInfo& u)
+    {
         u.Action = ba->readStringVint();
         u.PRNumber = ba->readFint32();
         u.Reviewer = ba->readStringVint();
