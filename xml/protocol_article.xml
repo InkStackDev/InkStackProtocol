@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metalib version="1.0" desc="文章服务对外 RPC 协议定义">
+    <header name="protocol_article" desc="文章服务对外 RPC 协议定义">
+        <!-- ============================================================
+             提供方：article 服务。消费方：platform（dashboard/stats/database）、
+             comment（校验文章存在性）。
+             写操作（发布/审核/删除/点赞累加）一律不对外暴露。
+             ============================================================ -->
+
+        <macro name="ARTICLE_CMD_GET_BRIEF" value="3001" type="int" desc="按文章 id 获取文章简介"/>
+        <macro name="ARTICLE_CMD_GET_BRIEFS" value="3002" type="int" desc="按文章 id 列表批量获取文章简介"/>
+        <macro name="ARTICLE_CMD_GET_STATS" value="3003" type="int" desc="获取文章统计（支持分类/角色/时间/关键词过滤）"/>
+        <macro name="ARTICLE_CMD_GET_VIEW_STATS" value="3004" type="int" desc="获取浏览量统计（今日/累计/访客）"/>
+        <macro name="ARTICLE_CMD_LIST_RECENT" value="3005" type="int" desc="获取最近文章列表（仪表盘用）"/>
+        <macro name="ARTICLE_CMD_COUNT_BY_USER" value="3006" type="int" desc="统计指定用户的文章数"/>
+
+        <!-- 跨服务文章简介：只包含列表展示需要的字段 -->
+        <struct name="ArticleBrief" desc="文章简介（跨服务只读视图）" serialize="true">
+            <entry name="Id" type="int64" desc="文章 id，0 表示不存在"/>
+            <entry name="UserId" type="int64" desc="作者用户 id"/>
+            <entry name="Title" type="string" desc="标题"/>
+            <entry name="State" type="int32" desc="状态：见 ArticleManager::State"/>
+            <entry name="IsDeleted" type="bool" desc="是否已删除"/>
+            <entry name="Views" type="int64" desc="浏览量"/>
+            <entry name="Praise" type="int64" desc="点赞数"/>
+            <entry name="Favorites" type="int64" desc="收藏数"/>
+            <entry name="PublishTime" type="int64" desc="发布时间（秒）"/>
+            <entry name="CreateTime" type="int64" desc="创建时间（秒）"/>
+            <entry name="UpdateTime" type="int64" desc="更新时间（秒）"/>
+        </struct>
+
+        <struct name="ArticleStats" desc="文章统计" serialize="true">
+            <entry name="Total" type="int64" desc="总数"/>
+            <entry name="Pending" type="int64" desc="待审核数"/>
+            <entry name="Published" type="int64" desc="已发布数"/>
+            <entry name="Rejected" type="int64" desc="已驳回数"/>
+            <entry name="Reported" type="int64" desc="被举报数"/>
+        </struct>
+
+        <struct name="ArticleViewStats" desc="文章浏览量统计" serialize="true">
+            <entry name="TodayViews" type="int64" desc="今日浏览量"/>
+            <entry name="TotalViews" type="int64" desc="累计浏览量"/>
+            <entry name="TotalVisitors" type="int64" desc="累计访客数"/>
+        </struct>
+
+    </header>
+</metalib>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metalib version="1.0" desc="评论服务对外 RPC 协议定义">
+    <header name="protocol_comment" desc="评论服务对外 RPC 协议定义">
+        <!-- ============================================================
+             提供方：comment 服务。消费方：article（文章详情/列表要评论数）、
+             platform（dashboard 最近评论、数据库统计）。
+             写操作（发表/审核/点赞/删除）一律不对外暴露。
+             ============================================================ -->
+
+        <macro name="COMMENT_CMD_COUNT_BY_ARTICLE" value="4001" type="int" desc="统计指定文章的评论数"/>
+        <macro name="COMMENT_CMD_GET_STATS" value="4002" type="int" desc="获取评论统计"/>
+        <macro name="COMMENT_CMD_LIST_RECENT" value="4003" type="int" desc="获取最近评论列表（仪表盘/动态用）"/>
+        <macro name="COMMENT_CMD_GET_BRIEFS" value="4004" type="int" desc="按评论 id 列表批量获取评论简介"/>
+
+        <!-- 跨服务评论简介：只包含列表展示需要的字段 -->
+        <struct name="CommentBrief" desc="评论简介（跨服务只读视图）" serialize="true">
+            <entry name="Id" type="int64" desc="评论 id，0 表示不存在"/>
+            <entry name="ArticleId" type="int64" desc="所属文章 id"/>
+            <entry name="UserId" type="int64" desc="评论者用户 id"/>
+            <entry name="Content" type="string" desc="评论内容"/>
+            <entry name="Status" type="int32" desc="审核状态：见 CommentManager::Status"/>
+            <entry name="IsDeleted" type="bool" desc="是否已删除"/>
+            <entry name="CreateTime" type="int64" desc="创建时间（秒）"/>
+            <entry name="UpdateTime" type="int64" desc="更新时间（秒）"/>
+        </struct>
+
+        <struct name="CommentStats" desc="评论统计" serialize="true">
+            <entry name="Total" type="int64" desc="总数"/>
+            <entry name="Pending" type="int64" desc="待审核数"/>
+            <entry name="Approved" type="int64" desc="已通过数"/>
+            <entry name="Spam" type="int64" desc="垃圾评论数"/>
+            <entry name="Reported" type="int64" desc="被举报数"/>
+        </struct>
+
+    </header>
+</metalib>

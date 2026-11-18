@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metalib version="1.0" desc="用户服务对外 RPC 协议定义">
+    <header name="protocol_user" desc="用户服务对外 RPC 协议定义">
+        <!-- ============================================================
+             约定：
+             1. 跨服务只暴露「读」与显式命令，写操作永远留在 user 服务内部。
+             2. 业务失败不用异常表达（框架会把异常统一变成 code=500），
+                而是放在返回结构里：Id=0 或空串代表不存在 / 未配置。
+             3. 参数与返回值尽量批量，避免逐条往返。
+             ============================================================ -->
+
+        <macro name="USER_CMD_GET_BRIEF" value="1001" type="int" desc="按用户 id 获取用户简介"/>
+        <macro name="USER_CMD_GET_BRIEFS" value="1002" type="int" desc="按用户 id 列表批量获取用户简介"/>
+        <macro name="USER_CMD_GET_ALL_IDS" value="1003" type="int" desc="获取全部用户 id（仅未删除）"/>
+        <macro name="USER_CMD_GET_FOLLOW_COUNTS" value="1004" type="int" desc="获取用户关注数/粉丝数"/>
+        <macro name="USER_CMD_IS_FOLLOWING" value="1005" type="int" desc="判断 uid 是否关注了 target"/>
+        <macro name="USER_CMD_GET_AI_CONFIG" value="1006" type="int" desc="获取用户的 AI 配置"/>
+
+        <!-- 跨服务用户简介：只包含展示与鉴权需要的字段 -->
+        <struct name="UserBrief" desc="用户简介（跨服务只读视图）" serialize="true">
+            <entry name="Id" type="int64" desc="用户 id，0 表示不存在"/>
+            <entry name="Name" type="string" desc="用户名"/>
+            <entry name="Avatar" type="string" desc="头像地址"/>
+            <entry name="Email" type="string" desc="邮箱"/>
+            <entry name="Role" type="int32" desc="角色：见 UserManager::Role"/>
+            <entry name="State" type="int32" desc="状态：见 UserManager::Status"/>
+            <entry name="IsDeleted" type="bool" desc="是否已删除"/>
+            <entry name="UpdateTime" type="int64" desc="更新时间（秒），用于缓存失效判断"/>
+        </struct>
+
+        <struct name="UserFollowCounts" desc="用户关注统计" serialize="true">
+            <entry name="Followers" type="int64" desc="粉丝数"/>
+            <entry name="Following" type="int64" desc="关注数"/>
+        </struct>
+
+        <!-- AI 配置：ApiKey 为落库时的加密串，由调用方按现有方式解密 -->
+        <struct name="UserAiConfig" desc="用户 AI 配置（跨服务只读视图）" serialize="true">
+            <entry name="Type" type="string" desc="服务商类型：glm/openai/deepseek/claude，空表示未配置"/>
+            <entry name="Model" type="string" desc="模型名称"/>
+            <entry name="Url" type="string" desc="自定义接口地址"/>
+            <entry name="ApiKey" type="string" desc="加密后的 API Key"/>
+        </struct>
+
+    </header>
+</metalib>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metalib version="1.0" desc="平台服务对外 RPC 协议定义">
+    <header name="protocol_platform" desc="平台服务对外 RPC 协议定义">
+        <!-- ============================================================
+             提供方：platform 服务。消费方：user（系统设置）、
+             全部服务（事件推送 -> WebSocket）、user（组织/作业列表）。
+             platform 不反向依赖任何服务。
+             ============================================================ -->
+
+        <macro name="PLATFORM_CMD_PING" value="2000" type="int" desc="连通性自检，返回 func_id"/>
+        <macro name="PLATFORM_CMD_GET_SETTINGS" value="2001" type="int" desc="获取系统设置快照"/>
+        <macro name="PLATFORM_CMD_KICK_DEVICE" value="2002" type="int" desc="踢下线指定设备（单向通知）"/>
+        <macro name="PLATFORM_CMD_PUSH_EVENT" value="2003" type="int" desc="推送业务事件到 WebSocket（单向通知）"/>
+        <macro name="PLATFORM_CMD_LIST_USER_ORGS" value="2004" type="int" desc="获取用户所属组织列表"/>
+        <macro name="PLATFORM_CMD_LIST_USER_ASSIGNMENTS" value="2005" type="int" desc="获取用户可见作业列表"/>
+
+        <!-- 系统设置快照：字段与 system_settings 表一致，UpdatedAt 用于调用方缓存失效 -->
+        <struct name="SystemSettings" desc="系统设置快照" serialize="true">
+            <entry name="SiteName" type="string" desc="站点名称"/>
+            <entry name="SiteDescription" type="string" desc="站点描述"/>
+            <entry name="SiteKeywords" type="string" desc="站点关键词"/>
+            <entry name="SiteLogo" type="string" desc="站点 Logo"/>
+            <entry name="SiteIcon" type="string" desc="站点图标"/>
+            <entry name="Favicon" type="string" desc="favicon 地址"/>
+            <entry name="Language" type="string" desc="默认语言"/>
+            <entry name="Timezone" type="string" desc="时区"/>
+            <entry name="EnableRegistration" type="int32" desc="是否开放注册"/>
+            <entry name="RequireEmailVerification" type="int32" desc="是否要求邮箱验证"/>
+            <entry name="AllowComments" type="int32" desc="是否允许评论"/>
+            <entry name="ModerateComments" type="int32" desc="评论是否需审核"/>
+            <entry name="MaintenanceMode" type="int32" desc="维护模式开关"/>
+            <entry name="SessionTimeout" type="int32" desc="会话超时（秒）"/>
+            <entry name="MaxFileSize" type="int32" desc="上传大小上限（MB）"/>
+            <entry name="AllowedFileTypes" type="string" desc="允许上传的文件类型"/>
+            <entry name="SmtpHost" type="string" desc="SMTP 主机"/>
+            <entry name="SmtpPort" type="int32" desc="SMTP 端口"/>
+            <entry name="SmtpUsername" type="string" desc="SMTP 用户名"/>
+            <entry name="SmtpPassword" type="string" desc="SMTP 密码"/>
+            <entry name="SmtpEncryption" type="string" desc="SMTP 加密方式"/>
+            <entry name="FromEmail" type="string" desc="发件邮箱"/>
+            <entry name="FromName" type="string" desc="发件人名称"/>
+            <entry name="ReplyTo" type="string" desc="回复地址"/>
+            <entry name="AdminEmail" type="string" desc="管理员邮箱"/>
+            <entry name="BackupSchedule" type="string" desc="备份计划"/>
+            <entry name="UpdatedAt" type="int64" desc="更新时间（秒），用于缓存失效"/>
+        </struct>
+
+        <!-- 用户所属组织（跨服务只读视图） -->
+        <struct name="UserOrgBrief" desc="用户所属组织简介" serialize="true">
+            <entry name="RelId" type="int64" desc="用户-组织关系 id"/>
+            <entry name="OrgId" type="int64" desc="组织 id"/>
+            <entry name="OrgName" type="string" desc="组织名称"/>
+            <entry name="OrgDescription" type="string" desc="组织描述"/>
+            <entry name="Type" type="string" desc="组织类型"/>
+            <entry name="Role" type="int32" desc="用户在该组织中的角色"/>
+            <entry name="JoinTime" type="int64" desc="加入时间（秒）"/>
+            <entry name="MemberCount" type="int64" desc="成员数"/>
+        </struct>
+
+        <!-- 用户可见作业（跨服务只读视图） -->
+        <struct name="UserAssignmentBrief" desc="用户可见作业简介" serialize="true">
+            <entry name="Id" type="int64" desc="作业 id"/>
+            <entry name="Name" type="string" desc="作业名称"/>
+            <entry name="SubjectName" type="string" desc="科目名称"/>
+            <entry name="Deadline" type="int64" desc="截止时间（秒）"/>
+            <entry name="Status" type="int32" desc="状态：见 AssignmentManager::Status"/>
+            <entry name="Priority" type="int32" desc="优先级"/>
+            <entry name="CreateTime" type="int64" desc="创建时间（秒）"/>
+            <entry name="Description" type="string" desc="作业描述"/>
+            <entry name="FileType" type="string" desc="允许的提交文件类型"/>
+            <entry name="MaxSize" type="int32" desc="提交文件大小上限"/>
+        </struct>
+
+    </header>
+</metalib>
