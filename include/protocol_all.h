@@ -12,5 +12,6 @@
 
 // 包含所有生成的协议头文件
 #include "protocol_ss_github.h" // IWYU pragma: keep
+#include "protocol_ss_search.h" // IWYU pragma: keep
 
 #endif // __PROTOCOL_ALL_H__
