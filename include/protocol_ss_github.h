@@ -16,7 +16,7 @@
  * @brief GitHub Pull Request 事件数据（对应 pull_request webhook）
  */
 struct tagGithubPRInfo {
-    std::string Action;     /* 事件类型: opened/closed/reopened/synchronize/edited/labeled/unlabeled */
+    std::string Action;     /* 事件类型 */
     int32_t Number;         /* PR 编号 */
     std::string Title;      /* PR 标题 */
     std::string Body;       /* PR 描述/正文 */
@@ -87,7 +87,7 @@ struct chen::rpc::Serialization<tagGithubPRInfo> {
 };
 
 /**
- * @brief GitHub PR Review 事件数据（对应 pull_request_review webhook）
+ * @brief GitHub PR Review 事件数据
  */
 struct tagGithubPRReviewInfo {
     std::string Action;      /* 事件类型: submitted/edited/dismissed */

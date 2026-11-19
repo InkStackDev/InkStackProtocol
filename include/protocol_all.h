@@ -14,6 +14,7 @@
 #include "protocol_article.h"   // IWYU pragma: keep
 #include "protocol_comment.h"   // IWYU pragma: keep
 #include "protocol_platform.h"  // IWYU pragma: keep
+#include "protocol_search.h"    // IWYU pragma: keep
 #include "protocol_ss_github.h" // IWYU pragma: keep
 #include "protocol_user.h"      // IWYU pragma: keep
 
