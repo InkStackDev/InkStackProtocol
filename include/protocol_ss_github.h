@@ -5,7 +5,7 @@
 #ifndef __PROTOCOL_SS_GITHUB_H__
 #define __PROTOCOL_SS_GITHUB_H__
 
-#include <chen/rpc/serializer.h>
+#include <Chen/Rpc/Serializer.hpp>
 #include <cstdint>
 #include <string>
 

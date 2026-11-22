@@ -5,13 +5,12 @@
 #ifndef __PROTOCOL_SS_SEARCH_H__
 #define __PROTOCOL_SS_SEARCH_H__
 
-#include <chen/rpc/serializer.h>
+#include <Chen/Rpc/Serializer.hpp>
 #include <cstdint>
 #include <string>
 #include <vector>
 
-#define SS_SEARCH_INDEX_VERSION      3 /* 搜索索引文件格式版本 */
-
+#define SS_SEARCH_INDEX_VERSION      3   /* 搜索索引文件格式版本 */
 #define SS_CMD_SEARCH_ARTICLES       200 /* 搜索文章 */
 #define SS_CMD_SEARCH_UPSERT_DOC     201 /* 新增或更新搜索文档 */
 #define SS_CMD_SEARCH_REMOVE_ARTICLE 202 /* 从搜索索引移除文章 */
